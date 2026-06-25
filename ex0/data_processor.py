@@ -23,18 +23,18 @@ class DataProcessor(ABC):
 
 class NumericProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
-        data = data if type(data) is list else [data]
+        data = data if isinstance(data, list) else [data]
 
         for d in data:
-            if type(d) is not int and type(d) is not float:
+            if not isinstance(d, (int, float)):
                 return False
         return True
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
             raise ValueError("Improper numeric data")
 
-        data = data if type(data) is list else [data]
+        data = data if isinstance(data, list) else [data]
         for d in data:
             self._storage.append((self._rank_counter, str(d)))
             self._rank_counter += 1
@@ -42,18 +42,18 @@ class NumericProcessor(DataProcessor):
 
 class TextProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
-        data = data if type(data) is list else [data]
+        data = data if isinstance(data, list) else [data]
 
         for d in data:
-            if type(d) is not str:
+            if not isinstance(d, str):
                 return False
         return True
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: str | list[str]) -> None:
         if not self.validate(data):
             raise ValueError("Improper text data")
 
-        data = data if type(data) is list else [data]
+        data = data if isinstance(data, list) else [data]
         for d in data:
             self._storage.append((self._rank_counter, str(d)))
             self._rank_counter += 1
@@ -61,18 +61,18 @@ class TextProcessor(DataProcessor):
 
 class LogProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
-        data = data if type(data) is list else [data]
+        data = data if isinstance(data, list) else [data]
 
         for d in data:
-            if type(d) is not dict:
+            if not isinstance(d, dict):
                 return False
         return True
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: dict[Any, Any] | list[dict[Any, Any]]) -> None:
         if not self.validate(data):
             raise ValueError("Improper log data")
 
-        data = data if type(data) is list else [data]
+        data = data if isinstance(data, list) else [data]
         for d in data:
             formatted = ": ".join(str(v) for v in d.values())
             self._storage.append((self._rank_counter, formatted))
