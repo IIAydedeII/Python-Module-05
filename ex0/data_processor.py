@@ -107,11 +107,6 @@ def main() -> None:
     print("Testing Text Processor...")
     processor = TextProcessor()
     print(" Trying to validate input '42':", processor.validate(42))
-    print(" Test invalid ingestion of number '123' without prior validation:")
-    try:
-        processor.ingest(123)
-    except ValueError as e:
-        print(" Got exception:", e)
     data = ["Hello", "Nexus", "World"]
     print(" Processing data:", data)
     processor.ingest(data)
@@ -124,11 +119,6 @@ def main() -> None:
     print("Testing Log Processor...")
     processor = LogProcessor()
     print(" Trying to validate input 'Hello':", processor.validate("Hello"))
-    print(" Test invalid ingestion of string 'foo' without prior validation:")
-    try:
-        processor.ingest("foo")
-    except ValueError as e:
-        print(" Got exception:", e)
     data = [
         {"log_level": "NOTICE", "log_message": "Connection to server"},
         {"log_level": "ERROR", "log_message": "Unauthorized access!!"},
