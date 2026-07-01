@@ -129,7 +129,6 @@ def main() -> None:
     for _ in range(2):
         output = processor.output()
         print(f" Log entry {output[0]}:", output[1])
-    print()
 
 
 if __name__ == "__main__":
