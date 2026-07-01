@@ -6,8 +6,8 @@ from typing import Any
 class DataProcessor(ABC):
 
     def __init__(self) -> None:
-        self._storage: list[tuple[int, str]] = []
-        self._rank_counter = 0
+        self.storage: list[tuple[int, str]] = []
+        self.rank_counter = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -18,7 +18,7 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
-        return self._storage.pop(0)
+        return self.storage.pop(0)
 
 
 class NumericProcessor(DataProcessor):
@@ -36,8 +36,8 @@ class NumericProcessor(DataProcessor):
 
         data = data if isinstance(data, list) else [data]
         for d in data:
-            self._storage.append((self._rank_counter, str(d)))
-            self._rank_counter += 1
+            self.storage.append((self.rank_counter, str(d)))
+            self.rank_counter += 1
 
 
 class TextProcessor(DataProcessor):
@@ -55,8 +55,8 @@ class TextProcessor(DataProcessor):
 
         data = data if isinstance(data, list) else [data]
         for d in data:
-            self._storage.append((self._rank_counter, str(d)))
-            self._rank_counter += 1
+            self.storage.append((self.rank_counter, str(d)))
+            self.rank_counter += 1
 
 
 class LogProcessor(DataProcessor):
@@ -75,8 +75,8 @@ class LogProcessor(DataProcessor):
         data = data if isinstance(data, list) else [data]
         for d in data:
             formatted = ": ".join(str(v) for v in d.values())
-            self._storage.append((self._rank_counter, formatted))
-            self._rank_counter += 1
+            self.storage.append((self.rank_counter, formatted))
+            self.rank_counter += 1
 
 
 def main() -> None:
